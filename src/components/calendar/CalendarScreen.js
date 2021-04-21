@@ -18,6 +18,7 @@ import {
     weekdaysShort
 } from "./configurations";
 import {CalendarEvent} from "./CalendarEvent";
+import {CalendarModal} from "./CalendarModal";
 
 moment.locale("es");
 
@@ -94,6 +95,8 @@ export const CalendarScreen = () => {
                 onView={onViewChange}
                 view={lastView}
             />
+
+            <CalendarModal />
         </div>
     );
 };
