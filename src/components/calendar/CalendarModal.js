@@ -3,6 +3,8 @@ import Modal from "react-modal";
 import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
 
+import Swal from "sweetalert2";
+
 const customStyles = {
     content: {
         top: "50%",
@@ -25,6 +27,7 @@ export const CalendarModal = () => {
     //Mantiene el estado de la fecha seleccionada en el campo del datepicker
     const [dateStart, setDateStart] = useState(dateNow.toDate());
     const [dateEnd, setDateEnd] = useState(dateFuture.toDate());
+    const [validTitle, setValidTitle] = useState(true);
 
     //Mantiene el estado del formulario para agregar un nuevo evento
     const [formValues, setFormValues] = useState({
@@ -34,7 +37,7 @@ export const CalendarModal = () => {
         end: dateFuture.toDate()
     });
 
-    const {title, notes} = formValues;
+    const {title, notes, start, end} = formValues;
 
     const handleInputChange = ({target}) => {
         setFormValues({
@@ -45,7 +48,9 @@ export const CalendarModal = () => {
         });
     };
 
-    const closeModal = () => {};
+    const closeModal = () => {
+        //TODO: cerrar el modal
+    };
 
     const handleStartDateChange = (e) => {
         setDateStart(e);
@@ -65,7 +70,23 @@ export const CalendarModal = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formValues);
+
+        //Creo instancias de moment
+        const momentStart = moment(start);
+        const momentEnd = moment(end);
+        if (momentStart.isSameOrAfter(momentEnd)) {
+            Swal.fire("Error", "La fecha de fin debe ser mayor a la de inicio");
+            return;
+        }
+
+        if (title.trim().length < 10) {
+            return setValidTitle(false);
+        }
+
+        //TODO: grabar en base de datos
+
+        setValidTitle(true);
+        closeModal();
     };
 
     return (
@@ -105,13 +126,14 @@ export const CalendarModal = () => {
                     <label>Titulo y notas</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className={`form-control ${
+                            !validTitle && "is-invalid"
+                        }`}
                         placeholder="Título del evento"
                         name="title"
                         autoComplete="off"
                         value={title}
                         onChange={handleInputChange}
-                        required="required"
                     />
                     <small id="emailHelp" className="form-text text-muted">
                         Una descripción corta
