@@ -19,6 +19,8 @@ import {
 } from "./configurations";
 import {CalendarEvent} from "./CalendarEvent";
 import {CalendarModal} from "./CalendarModal";
+import {useDispatch, useSelector} from "react-redux";
+import {uiOpenModal} from "../../actions/ui";
 
 moment.locale("es");
 
@@ -48,13 +50,23 @@ const events = [
 ];
 
 export const CalendarScreen = () => {
+    const dispatch = useDispatch();
+
+    //Hook de Redux que retorna el state actual
+    //En este caso tomo el atributo ui del state y luego desestructuro el modalOpen
+    const {modalOpen} = useSelector((state) => {
+        return state.ui;
+    });
+
     //Mantenemos el estado de la última vista utilizando useState
     //Si la variable no existe en el localStorage, setea por defecto en month
     const [lastView, setLastView] = useState(
         localStorage.getItem("lastView") || "month"
     );
 
-    const onDoubleClick = (event) => {};
+    const onDoubleClick = (event) => {
+        dispatch(uiOpenModal());
+    };
 
     const onSelect = (event) => {};
 
