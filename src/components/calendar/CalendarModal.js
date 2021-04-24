@@ -69,6 +69,7 @@ export const CalendarModal = () => {
     };
 
     const handleSubmit = (e) => {
+        console.log("hey");
         e.preventDefault();
 
         //Creo instancias de moment
@@ -134,6 +135,7 @@ export const CalendarModal = () => {
                         autoComplete="off"
                         value={title}
                         onChange={handleInputChange}
+                        required="required"
                     />
                     <small id="emailHelp" className="form-text text-muted">
                         Una descripción corta
