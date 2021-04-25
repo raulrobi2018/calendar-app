@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Modal from "react-modal";
 import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
@@ -26,6 +26,15 @@ Modal.setAppElement("#root");
 const dateNow = moment().minutes(0).seconds(0).add(1, "hours");
 const dateFuture = dateNow.clone().add(1, "hours");
 
+//Declarando las constantes fuera de la función principal,
+//hará que solamente se instancie 1 vez y no cada vez que se reconstruye la clase
+const initEvent = {
+    title: "",
+    notes: "",
+    start: dateNow.toDate(),
+    end: dateFuture.toDate()
+};
+
 export const CalendarModal = () => {
     const dispatch = useDispatch();
 
@@ -34,6 +43,9 @@ export const CalendarModal = () => {
     const {modalOpen} = useSelector((state) => {
         return state.ui;
     });
+    const {activeEvent} = useSelector((state) => {
+        return state.calendar;
+    });
 
     //Mantiene el estado de la fecha seleccionada en el campo del datepicker
     const [dateStart, setDateStart] = useState(dateNow.toDate());
@@ -41,14 +53,16 @@ export const CalendarModal = () => {
     const [validTitle, setValidTitle] = useState(true);
 
     //Mantiene el estado del formulario para agregar un nuevo evento
-    const [formValues, setFormValues] = useState({
-        title: "",
-        notes: "",
-        start: dateNow.toDate(),
-        end: dateFuture.toDate()
-    });
+    const [formValues, setFormValues] = useState(initEvent);
 
     const {title, notes, start, end} = formValues;
+
+    //Queda escuchando cuando cambia el activeEvent
+    useEffect(() => {
+        if (activeEvent) {
+            setFormValues(activeEvent);
+        }
+    }, [activeEvent, setFormValues]);
 
     const handleInputChange = ({target}) => {
         setFormValues({
@@ -61,6 +75,7 @@ export const CalendarModal = () => {
 
     const closeModal = () => {
         dispatch(uiCloseModal());
+        setFormValues(initEvent);
     };
 
     const handleStartDateChange = (e) => {
