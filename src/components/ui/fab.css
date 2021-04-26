@@ -1,9 +1,16 @@
 .fab {
     border-radius: 100%;
     bottom: 25px;
-    font-size: 30px;
-    padding: 25px;
+    font-size: 20px;
+    padding: 15px;
     position: fixed;
-    right: 25px;
     cursor: pointer;
+}
+
+.btn-add {
+    right: 25px;
+}
+
+.btn-del {
+    left: 25px;
 }
