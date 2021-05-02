@@ -7,3 +7,5 @@ import "./components/calendar/modal.css";
 import "./components/calendar/datepicker.css";
 
 ReactDOM.render(<CalendarApp />, document.getElementById("root"));
+
+console.log(process.env);
