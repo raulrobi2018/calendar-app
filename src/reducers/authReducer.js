@@ -16,8 +16,13 @@ export const authReducer = (state = initialState, action) => {
                 // Retornamos el state como está y seteo el checking
                 //en false porque ya se que lo autentiqué
                 ...state,
-                checking: false,
-                ...action.payload
+                ...action.payload,
+                checking: false
+            };
+        case types.authCheckingFinish:
+            return {
+                ...state,
+                checking: false
             };
         default:
             return state;
