@@ -15,12 +15,10 @@ import {CalendarScreen} from "../components/calendar/CalendarScreen";
 export const AppRouter = () => {
     const dispatch = useDispatch();
 
-    console.log("App router");
-
     //Solo tendrá como dependencia al dispatch porque el startChecking
     //no está dentro de este componente y por lo tanto no cambiará
     useEffect(() => {
-        dispatch(startChecking);
+        dispatch(startChecking());
     }, [dispatch]);
 
     return (

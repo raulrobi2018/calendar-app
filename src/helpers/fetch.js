@@ -21,8 +21,6 @@ const fetchWithToken = (endpoint, data, method = "GET") => {
     //Si llegase a ser null le seteo vacío
     const token = localStorage.getItem("token") || "";
 
-    console.log(url);
-
     if (method === "GET") {
         return fetch(url, {
             method,

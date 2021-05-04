@@ -58,7 +58,6 @@ export const startRegister = (name, email, password) => {
 
 export const startChecking = () => {
     return async (dispatch) => {
-        console.log("startChecking");
         const resp = await fetchWithToken("auth/renew");
 
         const body = await resp.json();
@@ -75,7 +74,6 @@ export const startChecking = () => {
                 })
             );
         } else {
-            Swal.fire("Error", body.msg, "error");
             dispatch(checkingFinish);
         }
     };
