@@ -17,7 +17,6 @@ const fetchWithOutToken = (endpoint, data, method = "GET") => {
 
 const fetchWithToken = (endpoint, data, method = "GET") => {
     const url = `${baseUrl}/${endpoint}`;
-
     //Si llegase a ser null le seteo vacío
     const token = localStorage.getItem("token") || "";
 

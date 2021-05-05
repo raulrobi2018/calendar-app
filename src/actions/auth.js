@@ -74,7 +74,7 @@ export const startChecking = () => {
                 })
             );
         } else {
-            dispatch(checkingFinish);
+            dispatch(checkingFinish());
         }
     };
 };
