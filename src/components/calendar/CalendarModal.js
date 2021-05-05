@@ -6,7 +6,11 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import {useDispatch, useSelector} from "react-redux";
 import {uiCloseModal} from "../../actions/ui";
-import {eventAddNew, eventClearActive, eventUpdate} from "../../actions/events";
+import {
+    eventClearActive,
+    eventStartAddNew,
+    eventUpdate
+} from "../../actions/events";
 
 const customStyles = {
     content: {
@@ -116,16 +120,7 @@ export const CalendarModal = () => {
             dispatch(eventUpdate(formValues));
         } else {
             //A la acción le paso el evento y le agrego un id y el usuario
-            dispatch(
-                eventAddNew({
-                    ...formValues,
-                    id: new Date().getTime(),
-                    user: {
-                        _id: 1321312,
-                        name: "Raul Rodriguez"
-                    }
-                })
-            );
+            dispatch(eventStartAddNew(formValues));
             //TODO: grabar en base de datos
         }
 

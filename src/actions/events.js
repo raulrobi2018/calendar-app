@@ -1,6 +1,32 @@
+import Swal from "sweetalert2";
+import {fetchWithToken} from "../helpers/fetch";
 import {types} from "../types/types";
 
-export const eventAddNew = (event) => ({
+export const eventStartAddNew = (event) => {
+    // obtengo el state usando el getState
+    return async (dispatch, getState) => {
+        try {
+            const {uid, name} = getState().auth;
+            const resp = await fetchWithToken("events", event, "POST");
+            const body = await resp.json();
+
+            if (body.ok) {
+                event.id = body.event.id;
+                event.user = {
+                    _id: uid,
+                    name
+                };
+
+                console.log(event);
+                dispatch(eventAddNew(event));
+            }
+        } catch (error) {
+            Swal.fire("", "Ha ocurrido un error", "error");
+        }
+    };
+};
+
+const eventAddNew = (event) => ({
     type: types.eventAddNew,
     payload: event
 });
