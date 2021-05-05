@@ -49,3 +49,22 @@ export const eventDelete = (event) => ({
     type: types.eventDelete,
     payload: event
 });
+
+export const eventsLoad = () => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchWithToken("events");
+            const body = await resp.json();
+            if (body.ok) {
+                dispatch(eventLoaded(body.events));
+            }
+        } catch (error) {
+            Swal.fire("", "Ha ocurrido un error", "error");
+        }
+    };
+};
+
+const eventLoaded = (events) => ({
+    type: types.eventsLoaded,
+    payload: events
+});

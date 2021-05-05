@@ -1,4 +1,3 @@
-import moment from "moment";
 import {types} from "../types/types";
 
 const initialState = {
@@ -38,6 +37,12 @@ export const calendarReducer = (state = initialState, action) => {
                 //pasar el payload
                 events: state.events.filter((e) => e.id !== action.payload.id),
                 activeEvent: null
+            };
+        case types.eventsLoaded:
+            return {
+                ...state,
+                // Exparso todos los eventos que vienen en el payload
+                events: [...action.payload]
             };
         default:
             return state;
