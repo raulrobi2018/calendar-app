@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import {fetchWithToken} from "../helpers/fetch";
+import {formatEvents} from "../helpers/formatEvents";
 import {types} from "../types/types";
 
 export const eventStartAddNew = (event) => {
@@ -55,8 +56,13 @@ export const eventsLoad = () => {
         try {
             const resp = await fetchWithToken("events");
             const body = await resp.json();
+
+            //Se transforman las fechas a un formato de Date porque mongo
+            //devuelve un string y el Calendar falla si las quiere mostrar
+            const events = formatEvents(body.events);
+
             if (body.ok) {
-                dispatch(eventLoaded(body.events));
+                dispatch(eventLoaded(events));
             }
         } catch (error) {
             Swal.fire("", "Ha ocurrido un error", "error");

@@ -54,6 +54,10 @@ export const CalendarScreen = () => {
         return state.calendar;
     });
 
+    const {uid} = useSelector((state) => {
+        return state.auth;
+    });
+
     const {activeEvent} = useSelector((state) => {
         return state.calendar;
     });
@@ -89,7 +93,7 @@ export const CalendarScreen = () => {
     const eventStyleGetter = (event, start, end, isSelected) => {
         //console.log(event, start, end, isSelected);
         const style = {
-            backgroundColor: "#367cf7",
+            backgroundColor: uid === event.user._id ? "#367cf7" : "#465660",
             borderRadius: "0px",
             opacity: 0.8,
             display: "block",
