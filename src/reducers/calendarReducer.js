@@ -1,5 +1,4 @@
-import moment from "moment";
-import { types } from "../types/types";
+import {types} from "../types/types";
 
 const initialState = {
     events: [],
@@ -13,14 +12,12 @@ export const calendarReducer = (state = initialState, action) => {
                 ...state,
                 activeEvent: action.payload
             };
-            break;
         case types.eventAddNew:
             return {
                 ...state,
                 //Expando los eventos y le agrego el nuevo
                 events: [...state.events, action.payload]
             };
-
         case types.eventClearActive:
             return {
                 ...state,
@@ -29,12 +26,31 @@ export const calendarReducer = (state = initialState, action) => {
         case types.eventUpdate:
             return {
                 ...state,
-                events: state.events.map(
-                    e => e.id === action.payload.id ? action.payload : e
+                events: state.events.map((e) =>
+                    e.id === action.payload.id ? action.payload : e
                 )
-            }
+            };
+        case types.eventDelete:
+            return {
+                ...state,
+                // También puedo tomar el id directamente del "activeEvent" y no
+                //pasar el payload
+                events: state.events.filter(
+                    (e) => e.id !== state.activeEvent.id
+                ),
+                activeEvent: null
+            };
+        case types.eventsLoaded:
+            return {
+                ...state,
+                // Exparso todos los eventos que vienen en el payload
+                events: [...action.payload]
+            };
+        case types.clearEventsOnLogout:
+            return {
+                ...initialState
+            };
         default:
             return state;
-            break;
     }
 };
