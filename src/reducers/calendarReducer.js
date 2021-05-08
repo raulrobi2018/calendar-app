@@ -35,7 +35,9 @@ export const calendarReducer = (state = initialState, action) => {
                 ...state,
                 // También puedo tomar el id directamente del "activeEvent" y no
                 //pasar el payload
-                events: state.events.filter((e) => e.id !== action.payload.id),
+                events: state.events.filter(
+                    (e) => e.id !== state.activeEvent.id
+                ),
                 activeEvent: null
             };
         case types.eventsLoaded:
@@ -43,6 +45,10 @@ export const calendarReducer = (state = initialState, action) => {
                 ...state,
                 // Exparso todos los eventos que vienen en el payload
                 events: [...action.payload]
+            };
+        case types.clearEventsOnLogout:
+            return {
+                ...initialState
             };
         default:
             return state;
