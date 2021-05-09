@@ -10,6 +10,12 @@ import {
     startLogout
 } from "../../actions/auth";
 import {types} from "../../types/types";
+import Swal from "sweetalert2";
+
+//Creo mock para SweetAlert
+jest.mock("sweetalert2", () => ({
+    fire: jest.fn()
+}));
 
 // Configuracion necesaria para probar dispatch
 const middlewares = [thunk];
@@ -53,5 +59,20 @@ describe("Testing auth.js", () => {
         //Si quiero extraer los argumentos con los que fue llamada una función de jest
         // console.log(localStorage.setItem.mock.calls);
         // const token = localStorage.setItem.mock.calls[0][1];
+    });
+
+    test("Testing startLogin when is incorrect", async () => {
+        //Password incorrect
+        await store.dispatch(startLogin("test@gmail.com", "test123456"));
+
+        const actions = store.getActions();
+
+        expect(actions).toEqual([]);
+
+        expect(Swal.fire).toHaveBeenCalledWith(
+            "Error",
+            "User or password incorrect",
+            "error"
+        );
     });
 });
