@@ -2,15 +2,10 @@ import configureStore from "redux-mock-store"; //ES6 modules
 import thunk from "redux-thunk";
 //Para que me muestre la ayuda
 import "@testing-library/jest-dom";
-import {
-    login,
-    logout,
-    startLogin,
-    startLoginEmailPassword,
-    startLogout
-} from "../../actions/auth";
-import {types} from "../../types/types";
 import Swal from "sweetalert2";
+import {startLogin, startRegister} from "../../actions/auth";
+import {types} from "../../types/types";
+import * as fetchModule from "../../helpers/fetch";
 
 //Creo mock para SweetAlert
 jest.mock("sweetalert2", () => ({
@@ -73,6 +68,42 @@ describe("Testing auth.js", () => {
             "Error",
             "User or password incorrect",
             "error"
+        );
+    });
+
+    test("startRegister correct", async () => {
+        fetchModule.fetchWithOutToken = jest.fn(() => ({
+            json() {
+                return {
+                    ok: true,
+                    uid: "123",
+                    name: "Carlos",
+                    token: "ABC1321321asdfasdf"
+                };
+            }
+        }));
+
+        await store.dispatch(
+            startRegister("test1@gmail.com", "123456", "Test 1")
+        );
+        const actions = store.getActions();
+
+        console.log(actions);
+        expect(actions[0]).toEqual({
+            type: types.authLogin,
+            payload: {
+                uid: "123",
+                name: "Carlos"
+            }
+        });
+
+        expect(localStorage.setItem).toHaveBeenCalledWith(
+            "token",
+            "ABC1321321asdfasdf"
+        );
+        expect(localStorage.setItem).toHaveBeenCalledWith(
+            "token-init-date",
+            expect.any(Number)
         );
     });
 });
