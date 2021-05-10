@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 //Para que me muestre la ayuda
 import "@testing-library/jest-dom";
 import Swal from "sweetalert2";
-import {startLogin, startRegister} from "../../actions/auth";
+import {startChecking, startLogin, startRegister} from "../../actions/auth";
 import {types} from "../../types/types";
 import * as fetchModule from "../../helpers/fetch";
 
@@ -19,6 +19,7 @@ const mockStore = configureStore(middlewares);
 const initState = {};
 
 let store = mockStore(initState);
+let token = "";
 
 Storage.prototype.setItem = jest.fn();
 
@@ -53,7 +54,7 @@ describe("Testing auth.js", () => {
 
         //Si quiero extraer los argumentos con los que fue llamada una función de jest
         // console.log(localStorage.setItem.mock.calls);
-        // const token = localStorage.setItem.mock.calls[0][1];
+        token = localStorage.setItem.mock.calls[0][1];
     });
 
     test("Testing startLogin when is incorrect", async () => {
@@ -104,6 +105,36 @@ describe("Testing auth.js", () => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
             "token-init-date",
             expect.any(Number)
+        );
+    });
+
+    test("Testing startChecking function", async () => {
+        fetchModule.fetchWithToken = jest.fn(() => ({
+            json() {
+                return {
+                    ok: true,
+                    uid: "123",
+                    name: "Carlos",
+                    token: "ABC1321321asdfasdf"
+                };
+            }
+        }));
+
+        await store.dispatch(startChecking());
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+            type: types.authLogin,
+            payload: {
+                uid: "123",
+                name: "Carlos"
+            }
+        });
+
+        expect(localStorage.setItem).toHaveBeenCalledWith(
+            "token",
+            "ABC1321321asdfasdf"
         );
     });
 });
