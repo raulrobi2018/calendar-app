@@ -29,13 +29,56 @@ describe("Testing AppRouter component", () => {
 
         const wrapper = mount(
             <Provider store={store}>
-                <MemoryRouter>
-                    <AppRouter />
-                </MemoryRouter>
+                <AppRouter />
             </Provider>
         );
         expect(wrapper).toMatchSnapshot();
 
-        expect(wrapper.find("h5").exists()).toBe(true);
+        expect(wrapper.find("h1").exists()).toBe(true);
+    });
+
+    test("should display the public route", () => {
+        const initState = {
+            auth: {
+                checking: false,
+                uid: null
+            }
+        };
+        const store = mockStore(initState);
+
+        const wrapper = mount(
+            <Provider store={store}>
+                <AppRouter />
+            </Provider>
+        );
+        expect(wrapper).toMatchSnapshot();
+
+        expect(wrapper.find(".login-container").exists()).toBe(true);
+    });
+
+    test("should display the private route", () => {
+        const initState = {
+            calendar: {
+                events: []
+            },
+            auth: {
+                checking: false,
+                uid: "123",
+                name: "Raul"
+            },
+            ui: {
+                modalOpen: false
+            }
+        };
+        const store = mockStore(initState);
+
+        const wrapper = mount(
+            <Provider store={store}>
+                <AppRouter />
+            </Provider>
+        );
+        expect(wrapper).toMatchSnapshot();
+
+        expect(wrapper.find(".calendar-screen").exists()).toBe(true);
     });
 });
