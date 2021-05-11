@@ -2,7 +2,6 @@ import React from "react";
 import {mount, configure} from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import {Provider} from "react-redux";
-import {MemoryRouter} from "react-router-dom";
 
 import {DeleteFab} from "../../../components/ui/DeleteFab";
 import {eventStartDelete} from "../../../actions/events";
@@ -28,9 +27,7 @@ store.dispatch = jest.fn();
 
 const wrapper = mount(
     <Provider store={store}>
-        <MemoryRouter>
-            <DeleteFab />
-        </MemoryRouter>
+        <DeleteFab />
     </Provider>
 );
 
@@ -41,7 +38,6 @@ describe("Testing DeleteFab component", () => {
 
     test("should run the eventStartDelete", () => {
         const a = wrapper.find(".btn-del").simulate("click", {});
-        console.log(a);
         //Evalúa que se haya llamdo
         expect(eventStartDelete).toHaveBeenCalled();
     });
