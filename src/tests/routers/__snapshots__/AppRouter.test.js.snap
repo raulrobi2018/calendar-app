@@ -1014,10 +1014,10 @@ exports[`Testing AppRouter component should display the public route 1`] = `
           onSubmit={[Function]}
         >
           <div
-            class="input-group has-validation"
+            className="input-group has-validation"
           >
             <span
-              class="input-group-text"
+              className="input-group-text"
               id="inputGroupPrepend"
             >
               @
@@ -1032,7 +1032,7 @@ exports[`Testing AppRouter component should display the public route 1`] = `
               value=""
             />
             <div
-              class="invalid-feedback"
+              className="invalid-feedback"
             >
               Ingrese el nombre de usuario
             </div>
@@ -1042,7 +1042,7 @@ exports[`Testing AppRouter component should display the public route 1`] = `
           >
             <input
               className="form-control"
-              minlength="10"
+              minLength="10"
               name="lPassword"
               onChange={[Function]}
               placeholder="Contraseña"

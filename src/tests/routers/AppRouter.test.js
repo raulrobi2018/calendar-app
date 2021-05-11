@@ -2,7 +2,6 @@ import React from "react";
 import {mount, configure} from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import {Provider} from "react-redux";
-import {MemoryRouter} from "react-router-dom";
 
 import {AppRouter} from "../../routers/AppRouter";
 
@@ -20,6 +19,8 @@ const mockStore = configureStore(middlewares);
 
 describe("Testing AppRouter component", () => {
     test("should display the Cargando...", () => {
+        // Inicializamos el state y el store dentro del test block
+        //Porque el store va a estar cambiando en cada test
         const initState = {
             auth: {
                 checking: true

@@ -78,9 +78,9 @@ export const LoginScreen = () => {
                         onSubmit={handleLogin}
                         noValidate
                     >
-                        <div class="input-group has-validation">
+                        <div className="input-group has-validation">
                             <span
-                                class="input-group-text"
+                                className="input-group-text"
                                 id="inputGroupPrepend"
                             >
                                 @
@@ -94,7 +94,7 @@ export const LoginScreen = () => {
                                 onChange={handleLoginInputChange}
                                 required="required"
                             />
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 Ingrese el nombre de usuario
                             </div>
                         </div>
@@ -107,7 +107,7 @@ export const LoginScreen = () => {
                                 value={lPassword}
                                 onChange={handleLoginInputChange}
                                 required="required"
-                                minlength="10"
+                                minLength="10"
                             />
                         </div>
                         <div className="form-group">

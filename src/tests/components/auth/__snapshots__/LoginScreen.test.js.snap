@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing LoginScreen component should display correctly 1`] = `
+<div
+  className="container login-container"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-6 login-form-1"
+    >
+      <h3>
+        Ingreso
+      </h3>
+      <form
+        className="needs-validation"
+        noValidate={true}
+        onSubmit={[Function]}
+      >
+        <div
+          className="input-group has-validation"
+        >
+          <span
+            className="input-group-text"
+            id="inputGroupPrepend"
+          >
+            @
+          </span>
+          <input
+            className="form-control"
+            name="lEmail"
+            onChange={[Function]}
+            placeholder="Email"
+            required="required"
+            type="email"
+            value=""
+          />
+          <div
+            className="invalid-feedback"
+          >
+            Ingrese el nombre de usuario
+          </div>
+        </div>
+        <div
+          className="form-group mt-2"
+        >
+          <input
+            className="form-control"
+            minLength="10"
+            name="lPassword"
+            onChange={[Function]}
+            placeholder="Contraseña"
+            required="required"
+            type="password"
+            value=""
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <input
+            className="btnSubmit"
+            type="submit"
+            value="Login"
+          />
+        </div>
+      </form>
+    </div>
+    <div
+      className="col-md-6 login-form-2"
+    >
+      <h3>
+        Registro
+      </h3>
+      <form
+        className="needs-validation"
+        noValidate={true}
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <input
+            className="form-control"
+            name="rName"
+            onChange={[Function]}
+            placeholder="Nombre"
+            required="required"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <input
+            className="form-control"
+            name="rEmail"
+            onChange={[Function]}
+            placeholder="Email"
+            required="required"
+            type="email"
+            value=""
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <input
+            className="form-control"
+            min="10"
+            name="rPassword1"
+            onChange={[Function]}
+            placeholder="Contraseña"
+            required="required"
+            type="password"
+            value=""
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <input
+            className="form-control"
+            min="10"
+            name="rPassword2"
+            onChange={[Function]}
+            placeholder="Repita la contraseña"
+            required="required"
+            type="password"
+            value=""
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <input
+            className="btnSubmit"
+            type="submit"
+            value="Crear cuenta"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
