@@ -5,11 +5,16 @@ import {Provider} from "react-redux";
 import {MemoryRouter} from "react-router-dom";
 
 import {DeleteFab} from "../../../components/ui/DeleteFab";
+import {eventStartDelete} from "../../../actions/events";
 
 //Configuración necesaria para que funcione mount con React 17
 configure({adapter: new Adapter()});
 import configureStore from "redux-mock-store"; //ES6 modules
 import thunk from "redux-thunk";
+
+jest.mock("../../../actions/events", () => ({
+    eventStartDelete: jest.fn()
+}));
 
 // Configuracion necesaria para probar dispatch
 const middlewares = [thunk];
@@ -32,5 +37,12 @@ const wrapper = mount(
 describe("Testing DeleteFab component", () => {
     test("should display correctly", () => {
         expect(wrapper).toMatchSnapshot();
+    });
+
+    test("should run the eventStartDelete", () => {
+        const a = wrapper.find(".btn-del").simulate("click", {});
+        console.log(a);
+        //Evalúa que se haya llamdo
+        expect(eventStartDelete).toHaveBeenCalled();
     });
 });
