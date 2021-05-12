@@ -8,15 +8,10 @@ import {act} from "@testing-library/react";
 configure({adapter: new Adapter()});
 import configureStore from "redux-mock-store"; //ES6 modules
 import thunk from "redux-thunk";
-import Swal from "sweetalert2";
 import {CalendarScreen} from "../../../components/calendar/CalendarScreen";
 import {messages} from "../../../helpers/calendarMessagesEsp";
 import {types} from "../../../types/types";
 import {eventSetActive, eventsLoad} from "../../../actions/events";
-
-jest.mock("sweetalert2", () => ({
-    fire: jest.fn()
-}));
 
 jest.mock("../../../actions/events", () => ({
     eventSetActive: jest.fn(),

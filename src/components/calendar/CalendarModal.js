@@ -140,6 +140,8 @@ export const CalendarModal = () => {
             className="modal"
             overlayClassName="modal-fondo"
             closeTimeoutMS={200}
+            //Esta propiedad la definimos solo para realizar las pruebas
+            ariaHideApp={!process.env.NODE_ENV === "test"}
         >
             <h1> {activeEvent ? "Modificar evento" : "Nuevo evento"} </h1>
             <button onClick={closeModal}>close</button>

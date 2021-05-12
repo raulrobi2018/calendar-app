@@ -7,3 +7,7 @@ Enzyme.configure({adapter: new Adapter()});
 
 /* La configuración del serializer de enzyme-to-json está disponible en https://www.npmjs.com/package/enzyme-to-json */
 expect.addSnapshotSerializer(createSerializer({mode: "deep"}));
+
+//Este mock solo se define para evitar el error en la prueba del
+//CalendarModal
+HTMLCanvasElement.prototype.getContext = () => {};
