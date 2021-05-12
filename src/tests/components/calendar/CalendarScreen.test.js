@@ -2,6 +2,7 @@ import React from "react";
 import {mount, configure} from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import {Provider} from "react-redux";
+import {act} from "@testing-library/react";
 
 //Configuración necesaria para que funcione mount con React 17
 configure({adapter: new Adapter()});
@@ -9,15 +10,20 @@ import configureStore from "redux-mock-store"; //ES6 modules
 import thunk from "redux-thunk";
 import Swal from "sweetalert2";
 import {CalendarScreen} from "../../../components/calendar/CalendarScreen";
+import {messages} from "../../../helpers/calendarMessagesEsp";
+import {types} from "../../../types/types";
+import {eventSetActive, eventsLoad} from "../../../actions/events";
 
 jest.mock("sweetalert2", () => ({
     fire: jest.fn()
 }));
 
-// jest.mock("../../../actions/auth", () => ({
-//     startLogin: jest.fn(),
-//     startRegister: jest.fn()
-// }));
+jest.mock("../../../actions/events", () => ({
+    eventSetActive: jest.fn(),
+    eventsLoad: jest.fn()
+}));
+
+Storage.prototype.setItem = jest.fn();
 
 // Configuracion necesaria para probar dispatch
 const middlewares = [thunk];
@@ -49,5 +55,26 @@ describe("Testing CalendarScreen component", () => {
         expect(wrapper).toMatchSnapshot();
     });
 
-    test("tenting interactions calendar ", () => {});
+    test("testing interactions calendar ", () => {
+        const calendar = wrapper.find("Calendar");
+
+        const calendarMessages = calendar.prop("messages");
+        //Testea los mensajes
+        expect(calendarMessages).toEqual(messages);
+        //Testea el evento onDoubleClickEvent
+        calendar.prop("onDoubleClickEvent")();
+        expect(store.dispatch).toHaveBeenCalledWith({type: types.uiOpenModal});
+        //Testea el evento onSelectEvetn
+        calendar.prop("onSelectEvent")({value: "hola"});
+        //Esta es otra manera de testear lo mismo que con el onDoubleClick pero creando el mock
+        expect(eventSetActive).toHaveBeenCalledWith({value: "hola"});
+        //Testea el evento onView
+        act(() => {
+            calendar.prop("onView")("week");
+            expect(localStorage.setItem).toHaveBeenCalledWith(
+                "lastView",
+                "week"
+            );
+        });
+    });
 });
