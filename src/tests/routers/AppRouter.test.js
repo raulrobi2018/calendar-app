@@ -18,6 +18,10 @@ const mockStore = configureStore(middlewares);
 // store.dispatch = jest.fn();
 
 describe("Testing AppRouter component", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     test("should display the Cargando...", () => {
         // Inicializamos el state y el store dentro del test block
         //Porque el store va a estar cambiando en cada test

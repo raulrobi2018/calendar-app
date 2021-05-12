@@ -56,7 +56,7 @@ export const LoginScreen = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
-
+        console.log(rPassword1, rPassword2);
         if (rPassword1 !== rPassword2) {
             return Swal.fire(
                 "Error",
