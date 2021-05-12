@@ -10,13 +10,17 @@ configure({adapter: new Adapter()});
 import configureStore from "redux-mock-store"; //ES6 modules
 import thunk from "redux-thunk";
 import {types} from "../../../types/types";
-import {eventSetActive, eventsLoad} from "../../../actions/events";
+import {
+    eventClearActive,
+    eventsLoad,
+    eventStartUpdate
+} from "../../../actions/events";
 import {CalendarModal} from "../../../components/calendar/CalendarModal";
 
-// jest.mock("../../../actions/events", () => ({
-//     eventSetActive: jest.fn(),
-//     eventsLoad: jest.fn()
-// }));
+jest.mock("../../../actions/events", () => ({
+    eventStartUpdate: jest.fn(),
+    eventsLoad: jest.fn()
+}));
 
 Storage.prototype.setItem = jest.fn();
 
@@ -58,10 +62,35 @@ const wrapper = mount(
 );
 
 describe("Testing CalendarModal component", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     //Para probar este test debe estar abierto el Modal en la app
     test("should display the Modal", () => {
         //No se puede realizar el snapshot porque siempre fallaría ya que
         //el Modal tiene fechas que se generan dinamicamente
         expect(wrapper.find("Modal").prop("isOpen")).toBe(true);
+    });
+
+    test("should call the update and close modal actions", () => {
+        wrapper.find("form").simulate("submit", {
+            preventDefault() {}
+        });
+
+        expect(eventStartUpdate).toHaveBeenCalledWith(
+            initState.calendar.activeEvent
+        );
+        expect(eventClearActive).toHaveBeenCalled();
+    });
+
+    test("should display an error when the title is empty", () => {
+        wrapper.find("form").simulate("submit", {
+            preventDefault() {}
+        });
+
+        expect(wrapper.find('input[name="title"]').hasClass("is-invalid")).toBe(
+            true
+        );
     });
 });
