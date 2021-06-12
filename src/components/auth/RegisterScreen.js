@@ -1,52 +1,23 @@
 import React from "react";
-import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
+
+import {startRegister} from "../../actions/auth";
 
 import {Form, Input, Button, Checkbox, Row, Col, Layout} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 
-import "animate.css";
-import {startLogin} from "../../actions/auth";
 import "./login.css";
+import "animate.css";
+import {Link} from "react-router-dom";
 
-export const LoginScreen = () => {
+export const RegisterScreen = () => {
     const {Header, Footer, Sider, Content} = Layout;
     const dispatch = useDispatch();
-
-    // const handleRegister = (e) => {
-    //     e.preventDefault();
-    //     console.log(rPassword1, rPassword2);
-    //     if (rPassword1 !== rPassword2) {
-    //         return Swal.fire(
-    //             "Error",
-    //             "Las contraseñas deben ser iguales",
-    //             "error"
-    //         );
-    //     }
-
-    //     dispatch(startRegister(rName, rEmail, rPassword1));
-    // };
-
-    const layout = {
-        labelCol: {
-            span: 8
-        },
-        wrapperCol: {
-            span: 16
-        }
-    };
-
-    const tailLayout = {
-        wrapperCol: {
-            offset: 8,
-            span: 16
-        }
-    };
 
     const onFinish = (values) => {
         console.log("Success:", values);
         const {username, password} = values;
-        dispatch(startLogin(username, password));
+        // dispatch(startLogin(username, password));
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -62,7 +33,7 @@ export const LoginScreen = () => {
                         <Col xs={2} sm={4} md={3} lg={8} xl={7}></Col>
                         <Col xs={20} sm={16} md={18} lg={8} xl={10}>
                             <Form
-                                name="formLogin"
+                                name="formRegister"
                                 initialValues={{
                                     remember: true
                                 }}
@@ -87,7 +58,7 @@ export const LoginScreen = () => {
                                 </Form.Item>
 
                                 <Form.Item
-                                    name="password"
+                                    name="password1"
                                     rules={[
                                         {
                                             required: true,
@@ -103,10 +74,19 @@ export const LoginScreen = () => {
                                 </Form.Item>
 
                                 <Form.Item
-                                    name="remember"
-                                    valuePropName="checked"
+                                    name="password2"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Repita la contraseña"
+                                        }
+                                    ]}
                                 >
-                                    <Checkbox>Recuérdame</Checkbox>
+                                    <Input.Password
+                                        prefix={
+                                            <LockOutlined className="site-form-item-icon" />
+                                        }
+                                    />
                                 </Form.Item>
 
                                 <Form.Item>
@@ -120,11 +100,9 @@ export const LoginScreen = () => {
                                 </Form.Item>
 
                                 <hr />
-                                <Form.Item>
-                                    <Link to="/auth/register" className="link">
-                                        Registrarme
-                                    </Link>
-                                </Form.Item>
+                                <Link to="/auth/login" className="link">
+                                    Ya estoy registrado
+                                </Link>
                             </Form>
                         </Col>
                         <Col xs={2} sm={4} md={3} lg={8} xl={7}></Col>

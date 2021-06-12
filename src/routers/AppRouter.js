@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {BrowserRouter as Router, Redirect, Switch} from "react-router-dom";
 
 import {startChecking} from "../actions/auth";
-import {LoginScreen} from "../components/auth/LoginScreen";
 import {CalendarScreen} from "../components/calendar/CalendarScreen";
+import {AuthRouter} from "./AuthRouter";
 import {PrivateRoute} from "./PrivateRoute";
 import {PublicRoute} from "./PublicRoute";
 
@@ -36,9 +36,8 @@ export const AppRouter = () => {
                     retornaría false que quiere decir que el string no es vacío. Al ponerle otra negación
                     retorna true */}
                     <PublicRoute
-                        exact
-                        path="/login"
-                        component={LoginScreen}
+                        path="/auth"
+                        component={AuthRouter}
                         isAuthenticated={!!uid}
                     />
                     <PrivateRoute
@@ -48,8 +47,11 @@ export const AppRouter = () => {
                         isAuthenticated={!!uid}
                     />
 
-                    {/* Si no encuentra ningún path, lo redirige a calendar */}
-                    <Redirect to="/" />
+                    {/* <Route path="/auth" component={AuthRouter} />
+                    <Route path="/" component={CalendarScreen} /> */}
+
+                    {/* Si no encuentra ningún path, lo redirige a login */}
+                    <Redirect to="/auth/login" />
                 </Switch>
             </div>
         </Router>
